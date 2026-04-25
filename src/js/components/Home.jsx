@@ -13,7 +13,10 @@ const Home = () => {
             setSeconds((prev) => prev + 1);
         }, 1000);
 
-        return () => clearInterval(interval);
+        return () => {
+			console.log("limpieza ejecutada");
+			clearInterval(interval);
+			};
     }, [isRunning]);
 
 	const handleStop = () => setRunning(false)	
