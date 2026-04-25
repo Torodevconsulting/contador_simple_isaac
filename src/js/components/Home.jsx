@@ -1,28 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Flipclock from "../components/Flipclock.jsx";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-
-//create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-            
+    const [seconds, setSeconds] = useState(0);
+	const [isRunning, setRunning] = useState(true);
 
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
+    useEffect(() => {
+
+		if (!isRunning) return; 
+
+        const interval = setInterval(() => {
+            setSeconds((prev) => prev + 1);
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [isRunning]);
+
+	const handleStop = () => setRunning(false)	
+	const handleResume = () => setRunning(true)
+	const handleReset = () => {
+		setRunning(false);
+		setSeconds(0);
+	};
+
+    return (
+        <div className="counter-wrapper">
+        	<Flipclock seconds={seconds}/>
+        	<div className="d-flex gap-3">
+        	    <button className="btn btn-danger" onClick={handleStop} disabled={!isRunning}>Stop</button>
+        	    <button className="btn btn-success" onClick={handleResume} disabled={isRunning}>Resume</button>
+        	    <button className="btn btn-warning" onClick={handleReset}>Reset</button>
+        	</div>
+   		</div>
+
+    );
 };
 
 export default Home;
