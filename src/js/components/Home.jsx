@@ -6,9 +6,14 @@ const Home = () => {
 	const [isRunning, setRunning] = useState(true);
 
     useEffect(() => {
+		console.log("useEffect ejecutado", isRunning);
 
-		if (!isRunning) return; 
+		if (!isRunning) { 
+			console.log("contador detenido");
+			return;
+		} 
 
+		console.log("contador iniciado");
         const interval = setInterval(() => {
             setSeconds((prev) => prev + 1);
         }, 1000);
